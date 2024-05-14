@@ -1,0 +1,5 @@
+my_word2vec_model.model
+my_word2vec_model.model.syn1neg.npy
+my_word2vec_model.model.wv.vectors.npy
+weights
+data/evidence.json

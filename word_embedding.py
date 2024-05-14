@@ -1,8 +1,12 @@
 from gensim.utils import simple_preprocess
 
+from preprocess import preprocess_sentence
+
 from gensim.models import Word2Vec
 
 import json
+
+model = Word2Vec.load("my_word2vec_model.model")
 
 
 def train():
@@ -13,7 +17,7 @@ def train():
     # Load JSON content
     documents = list(json.load(evidence_file).values())
 
-    sentences = [simple_preprocess(doc) for doc in documents]
+    sentences = [preprocess_sentence(doc) for doc in documents]
 
     # Train the Word2Vec model
     model = Word2Vec(sentences, vector_size=100, window=5, min_count=1, workers=4)
@@ -22,7 +26,7 @@ def train():
     model.save("my_word2vec_model.model")
 
     
-def find_similar(model, word):
+def find_similar(word):
     # Load the model (if it's not loaded)
     model = Word2Vec.load("my_word2vec_model.model")
 
@@ -31,15 +35,16 @@ def find_similar(model, word):
     
     return similar_words
 
-def embed(model, word):
+def embed(word):
     return model.wv[word]
 
 if __name__ == '__main__':
 
-    model = Word2Vec.load("my_word2vec_model.model")
+    # model = Word2Vec.load("my_word2vec_model.model")
     # train()
-    print(find_similar(model, 'electricity'))
+    # print(find_similar('electricity'))
 
-    print(embed(model, 'electricity'))
+    print(embed('new_york'))
+    # print(len(model.wv))
 
 
